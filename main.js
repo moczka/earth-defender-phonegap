@@ -934,8 +934,13 @@ function canvasApp(){
 		
 		var landscapeOrientation = window.innerWidth/window.innerHeight > 1;
 		if (landscapeOrientation) {
-			futureVelX = playerShip.velX-ax;
-			futureVelY = playerShip.velY-ay;
+			
+			futureVelX = playerShip.velX+ay;
+			futureVelY = playerShip.velY+ax;
+			
+			/*
+			futureVelX = playerShip.velX-ay;
+			futureVelY = playerShip.velY-ax;*/
 		} else {
 			futureVelX = playerShip.velX+ax;
 			futureVelY = playerShip.velY-ay;
@@ -2044,7 +2049,7 @@ this.context.drawImage(backgroundSprite, 0,0,this.canvasWidth,this.canvasHeight,
 				currentParticle.x += currentParticle.velX;
 				currentParticle.y += currentParticle.velY;
 				currentParticle.life++;
-				self.context.fillStyle = '#FF0000';
+				self.context.fillStyle = '#00FF00';
 				self.context.fillRect(currentParticle.x, currentParticle.y, currentParticle.width, currentParticle.height);
 					if(currentParticle.life >= currentParticle.maxLife){
 					currentParticle.alive = false;
