@@ -2,9 +2,33 @@ window.addEventListener('load', onWindowLoad, false);
 
 function onWindowLoad(){
 	
-		canvasApp();
+		document.addEventListener('deviceready', onDeviceReady, false);
 	
 }
+
+function onDeviceReady(){
+    document.removeEventListener('deviceready', onDeviceReady, false);
+    
+    // Set AdMobAds options:
+      admob.setOptions({
+        publisherId:          "ca-app-pub-2227032089453086/5162179651",  // Required
+        interstitialAdId:     "ca-app-pub-2227032089453086/5162179651",  // Optional
+        //tappxIdiOs:           "/XXXXXXXXX/Pub-XXXX-iOS-IIII",            // Optional
+        //tappxIdAndroid:       "/XXXXXXXXX/Pub-XXXX-Android-AAAA",        // Optional
+        //tappxShare:           0.5                                        // Optional
+      });
+
+      // Start showing banners (atomatic when autoShowBanner is set to true)
+      admob.createBannerView();
+
+      // Request interstitial (will present automatically when autoShowInterstitial is set to true)
+      admob.requestInterstitial();
+    
+    canvasApp();   
+}
+
+
+
 	
 //inis canvas app
 function canvasApp(){
@@ -120,7 +144,7 @@ function canvasApp(){
 	//score  & level variables
 	var currentScore = 0,
 	    currentLevel = 0,
-        lastLevel = 8,
+        lastLevel = 10,
         userBeatGame = false,
         enemyShipWorth = 10,
         rockWorth = 5,
@@ -1438,7 +1462,6 @@ this.context.drawImage(backgroundSprite, 0,0,this.canvasWidth,this.canvasHeight,
             shareButton.addEventListener('touchstart', function(){
                 userBeatGame = false;
                 currentLevel = 0;
-                window.open('https://www.facebook.com/sharer.php?u=http://www.noxtar.com/2016/06/play-earth-defender-game.html');
                 gameInterface.hide('beatGame');
                 gameInterface.display('titleScreen');
                 appState = STATE_TITLE_SCREEN;

@@ -17,6 +17,8 @@
         Javier Guerrero
     </author>
         
+    <plugin name="com.admob.google" spec="4.0.8" source="pgb" />    
+        
     <platform name="ios" >
         <preference name="exit-on-suspend" value="false" />
         <preference name="orientation" value="landscape" />
