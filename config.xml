@@ -16,8 +16,7 @@
     <author href="https://noxtar.com/p/about.html" email="steven.guesp@gmail.com">
         Javier Guerrero
     </author>
-        
-        <plugin name="com.admob.google" spec="4.0.8" source="https://github.com/appfeel/admob-google-cordova.git " />    
+          
         
     <platform name="ios" >
         <preference name="exit-on-suspend" value="false" />

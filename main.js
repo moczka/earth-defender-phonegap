@@ -1,35 +1,9 @@
 window.addEventListener('load', onWindowLoad, false);
 
 function onWindowLoad(){
-	
-		document.addEventListener('deviceready', onDeviceReady, false);
-	
-}
-
-function onDeviceReady(){
-    document.removeEventListener('deviceready', onDeviceReady, false);
-    
-    // Set AdMobAds options:
-      admob.setOptions({
-        publisherId:          "ca-app-pub-2227032089453086/5162179651",  // Required
-        interstitialAdId:     "ca-app-pub-2227032089453086/5162179651",  // Optional
-        //tappxIdiOs:           "/XXXXXXXXX/Pub-XXXX-iOS-IIII",            // Optional
-        //tappxIdAndroid:       "/XXXXXXXXX/Pub-XXXX-Android-AAAA",        // Optional
-        //tappxShare:           0.5                                        // Optional
-      });
-
-      // Start showing banners (atomatic when autoShowBanner is set to true)
-      admob.createBannerView();
-
-      // Request interstitial (will present automatically when autoShowInterstitial is set to true)
-      admob.requestInterstitial();
-    
     canvasApp();   
 }
 
-
-
-	
 //inis canvas app
 function canvasApp(){
 	
