@@ -15,7 +15,10 @@
 
     <author href="https://noxtar.com/p/about.html" email="steven.guesp@gmail.com">
         Javier Guerrero
-    </author>    
+    </author>
+        
+    <content src="index.html" />
+    <preference name="DisallowOverscroll" value="true" />
         
     <platform name="ios" >
         <preference name="exit-on-suspend" value="false" />
