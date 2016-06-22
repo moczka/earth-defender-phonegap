@@ -273,7 +273,7 @@ function canvasApp(){
         } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
             admobid = { // for iOS
                 banner: 'ca-app-pub-6869992474017983/4806197152',
-                interstitial: 'ca-app-pub-6869992474017983/7563979554'
+                interstitial: 'ca-app-pub-2227032089453086/5162179651'
             };
         } else {
             admobid = { // for Windows Phone
@@ -283,6 +283,8 @@ function canvasApp(){
         }
            
         initAds();
+        //prepare ad resources
+        AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:false});
         
 		appState = STATE_ASPECT_RATIO;
 		runState();
@@ -447,12 +449,7 @@ function canvasApp(){
 		}
         
         gameInterface.display('storyLine');
-		appState = STATE_STORY_LINE;
-        
-        //prepare ad resources
-        AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:false});
-        
-        
+		appState = STATE_STORY_LINE;        
 		
 	}
     
@@ -2344,7 +2341,7 @@ this.context.drawImage(backgroundSprite, 0,0,this.canvasWidth,this.canvasHeight,
         bgColor: '#000000', // color name, or '#RRGGBB'
             // x: integer,		// valid when set position to 0 / POS_XY
             // y: integer,		// valid when set position to 0 / POS_XY
-        isTesting: true, // set to true, to receiving test ad for testing purpose
+        isTesting: false, // set to true, to receiving test ad for testing purpose
          autoShow: false // auto show interstitial ad when loaded, set to false if prepare/show
         };    
         
