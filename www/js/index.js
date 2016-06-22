@@ -266,12 +266,12 @@ function canvasApp(){
         //determines whether it is an android or ios 
                 if( /(android)/i.test(navigator.userAgent) ) { 
             admobid = { // for Android
-                banner: 'ca-app-pub-6869992474017983/9375997553',
-                interstitial: 'ca-app-pub-6869992474017983/1657046752'
+                banner: 'ca-app-pub-2227032089453086/6504155257',
+                interstitial: 'ca-app-pub-2227032089453086/5027422053'
             };
         } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
             admobid = { // for iOS
-                banner: 'ca-app-pub-6869992474017983/4806197152',
+                banner: 'ca-app-pub-2227032089453086/8885872058',
                 interstitial: 'ca-app-pub-2227032089453086/5162179651'
             };
         } else {
