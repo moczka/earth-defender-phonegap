@@ -1,6 +1,12 @@
 window.addEventListener('load', onWindowLoad, false);
 
 function onWindowLoad(){
+    //adds event listener for deviceready cordova event
+    document.addEventListener('deviceready', initApp, false);
+}
+
+function initApp(){
+    window.removeEventListener('deviceready', initApp, false);
     canvasApp();
 }
 
@@ -275,10 +281,9 @@ function canvasApp(){
                 interstitial: 'ca-app-pub-6869992474017983/1355127956'
             };
         }
-        
-        //adds event listener for deviceready cordova event
-        document.addEventListener('deviceready', initAds, false);
-        
+           
+        initAds();
+        AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:false});
         
 		appState = STATE_ASPECT_RATIO;
 		runState();
@@ -446,7 +451,7 @@ function canvasApp(){
         
         
         //prepare ad resources
-        if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );
+        AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:autoshow});
         
         
 		appState = STATE_STORY_LINE;
@@ -752,7 +757,7 @@ function canvasApp(){
         playerShip.draw();
         
         if(playerShip.x >= 1020-playerShip.width){
-            if(AdMob) AdMob.showInterstitial();
+            AdMob.showInterstitial();
             appState = STATE_NEXT_LEVEL;   
         }
         
@@ -2325,13 +2330,23 @@ this.context.drawImage(backgroundSprite, 0,0,this.canvasWidth,this.canvasHeight,
     //init ads
     
     function initAds() {
-        if (AdMob) {
-            AdMob.createBanner({
-                adId : admobid.banner,
-                position : AdMob.AD_POSITION.BOTTOM_CENTER,
-                autoShow : true
-            });
-        }
+        
+    var defaultOptions = {
+        bannerId: admobid.banner,
+        interstitialId: admobid.interstitial,
+            // adSize: 'SMART_BANNER',
+            // width: integer, // valid when set adSize 'CUSTOM'
+            // height: integer, // valid when set adSize 'CUSTOM'
+        position: AdMob.AD_POSITION.BOTTOM_CENTER,
+            // offsetTopBar: false, // avoid overlapped by status bar, for iOS7+
+        bgColor: 'black', // color name, or '#RRGGBB'
+            // x: integer,		// valid when set position to 0 / POS_XY
+            // y: integer,		// valid when set position to 0 / POS_XY
+        isTesting: true, // set to true, to receiving test ad for testing purpose
+         autoShow: false // auto show interstitial ad when loaded, set to false if prepare/show
+        };    
+        
+        AdMob.setOptions( defaultOptions );
     }
     
 	//end of canvasApp function
