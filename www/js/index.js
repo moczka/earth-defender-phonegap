@@ -6,12 +6,6 @@ function onWindowLoad(){
 
 //inis canvas app
 function canvasApp(){
-    
-    
-    document.addEventListener('deviceready', onDeviceReady, false);
-    
-        /*Sets up admob */
-    var isAppForeground = true;
 	
 			//sets up game engine
 		window.requestAnimFrame = (function(){
@@ -68,6 +62,11 @@ function canvasApp(){
 	var loadCount = 0;
 	var FRAME_RATE = 1000/60;
 	var loopOn = false;
+    
+    //admob object 
+    var admobid = {};
+    
+    
 	
 	//set up sprites sheets & sounds
 	var backgroundSprite = new Image(),
@@ -258,6 +257,29 @@ function canvasApp(){
 				userAgent.portrait = true;
 			}
 		}
+        
+        //determines whether it is an android or ios 
+                if( /(android)/i.test(navigator.userAgent) ) { 
+            admobid = { // for Android
+                banner: 'ca-app-pub-6869992474017983/9375997553',
+                interstitial: 'ca-app-pub-6869992474017983/1657046752'
+            };
+        } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
+            admobid = { // for iOS
+                banner: 'ca-app-pub-6869992474017983/4806197152',
+                interstitial: 'ca-app-pub-6869992474017983/7563979554'
+            };
+        } else {
+            admobid = { // for Windows Phone
+                banner: 'ca-app-pub-6869992474017983/8878394753',
+                interstitial: 'ca-app-pub-6869992474017983/1355127956'
+            };
+        }
+        
+        //adds event listener for deviceready cordova event
+        document.addEventListener('deviceready', initAds, false);
+        
+        
 		appState = STATE_ASPECT_RATIO;
 		runState();
 	}
@@ -421,6 +443,12 @@ function canvasApp(){
 		}
         
         gameInterface.display('storyLine');
+        
+        
+        //prepare ad resources
+        if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );
+        
+        
 		appState = STATE_STORY_LINE;
 		
 	}
@@ -724,6 +752,7 @@ function canvasApp(){
         playerShip.draw();
         
         if(playerShip.x >= 1020-playerShip.width){
+            if(AdMob) AdMob.showInterstitial();
             appState = STATE_NEXT_LEVEL;   
         }
         
@@ -2292,87 +2321,17 @@ this.context.drawImage(backgroundSprite, 0,0,this.canvasWidth,this.canvasHeight,
 	       return document.querySelector(selector);
     }
     
-    function onDeviceReady(){
-        
-          document.removeEventListener('deviceready', onDeviceReady, false);
-          initAds();
-
-          // display a banner at startup
-          admob.createBannerView();
-
-          // request an interstitial
-          admob.requestInterstitialAd(); 
-            
-            console.log('The device on ready has worked');
-    }
+    
+    //init ads
     
     function initAds() {
-      if (admob) {
-        var adPublisherIds = {
-          ios : {
-            banner : "ca-app-pub-2227032089453086/8885872058",
-            interstitial : "ca-app-pub-2227032089453086/5162179651"
-          },
-          android : {
-            banner : "ca-app-pub-XXXXXXXXXXXXXXXX/BBBBBBBBBB",
-            interstitial : "ca-app-pub-XXXXXXXXXXXXXXXX/IIIIIIIIII"
-          }
-        };
-
-        var admobid = (/(android)/i.test(navigator.userAgent)) ? adPublisherIds.android : adPublisherIds.ios;
-
-        admob.setOptions({
-          publisherId:      admobid.banner,
-          interstitialAdId: admobid.interstitial,
-          //tappxIdiOs:       "/XXXXXXXXX/Pub-XXXX-iOS-IIII",
-          //tappxIdAndroid:   "/XXXXXXXXX/Pub-XXXX-Android-AAAA",
-          //tappxShare:       0.5,
-
-        });
-
-        registerAdEvents();
-
-      } else {
-        alert('AdMobAds plugin not ready');
-      }
-    }
-
-    function onAdLoaded(e) {
-      if (isAppForeground) {
-        if (e.adType === admob.AD_TYPE.INTERSTITIAL) {
-          console.log("An interstitial has been loaded and autoshown. If you want to load the interstitial first and show it later, set 'autoShowInterstitial: false' in admob.setOptions() and call 'admob.showInterstitialAd();' here");
-        } else if (e.adType === admob.AD_TYPE_BANNER) {
-          console.log("New banner received");
+        if (AdMob) {
+            AdMob.createBanner({
+                adId : admobid.banner,
+                position : AdMob.AD_POSITION.BOTTOM_CENTER,
+                autoShow : true
+            });
         }
-      }
-    }
-
-    function onPause() {
-      if (isAppForeground) {
-        admob.destroyBannerView();
-        isAppForeground = false;
-      }
-    }
-
-    function onResume() {
-      if (!isAppForeground) {
-        setTimeout(admob.createBannerView, 1);
-        setTimeout(admob.requestInterstitialAd, 1);
-        isAppForeground = true;
-      }
-    }
-
-    // optional, in case respond to events
-    function registerAdEvents() {
-      document.addEventListener(admob.events.onAdLoaded, onAdLoaded);
-      document.addEventListener(admob.events.onAdFailedToLoad, function (e) {});
-      document.addEventListener(admob.events.onAdOpened, function (e) {});
-      document.addEventListener(admob.events.onAdClosed, function (e) {});
-      document.addEventListener(admob.events.onAdLeftApplication, function (e) {});
-      document.addEventListener(admob.events.onInAppPurchaseRequested, function (e) {});
-
-      document.addEventListener("pause", onPause, false);
-      document.addEventListener("resume", onResume, false);
     }
     
 	//end of canvasApp function
