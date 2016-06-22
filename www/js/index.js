@@ -447,13 +447,12 @@ function canvasApp(){
 		}
         
         gameInterface.display('storyLine');
-        
+		appState = STATE_STORY_LINE;
         
         //prepare ad resources
-        AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:autoshow});
+        AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:false});
         
         
-		appState = STATE_STORY_LINE;
 		
 	}
     
@@ -546,8 +545,7 @@ function canvasApp(){
         alienMothership.spawn(randomX, randomY);
         alienMothership.setRelease(levelEnemies, 8);
         
-        //prepares a interstitial ad at the end of every level
-        AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:false});
+        
     }
 
 	//once the user has clicked the start button, this function draws the game
@@ -730,7 +728,7 @@ function canvasApp(){
         appState = STATE_WAITING;
         
         AdMob.showInterstitial();
-        
+        AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:false});
         
         reportEnemiesKilled.innerHTML = "Enemies Killed: "+enemiesKilled;
         reportRocksDestroyed.innerHTML = "Asteroids Destroyed: "+rocksDestroyed;
@@ -2343,7 +2341,7 @@ this.context.drawImage(backgroundSprite, 0,0,this.canvasWidth,this.canvasHeight,
             // height: integer, // valid when set adSize 'CUSTOM'
         //position: AdMob.AD_POSITION.BOTTOM_CENTER,
             // offsetTopBar: false, // avoid overlapped by status bar, for iOS7+
-        bgColor: 'red', // color name, or '#RRGGBB'
+        bgColor: '#000000', // color name, or '#RRGGBB'
             // x: integer,		// valid when set position to 0 / POS_XY
             // y: integer,		// valid when set position to 0 / POS_XY
         isTesting: true, // set to true, to receiving test ad for testing purpose
