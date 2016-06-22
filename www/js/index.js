@@ -55,9 +55,8 @@ function canvasApp(){
 	STATE_USER_AGENT = 4;
 	
 	//userAgent info and canvas control
-	var userAgent = {mobile:false,platform:"", portrait:false};
+	var userAgent = {mobile:false,platform:"", portrait:false, device:"iphone"};
 	var canvasHolder = $('#canvasHolder');
-    var preloadImage = $('#preload');
     var interfaceWrapper = $('#interfaceWrapper');
 	
 	//frame, assets counter and audio support
@@ -281,8 +280,17 @@ function canvasApp(){
                 interstitial: 'ca-app-pub-6869992474017983/1355127956'
             };
         }
-           
+        
+        if(/(ipad)/i.test(navigator.userAgent)){
+            userAgent.device = "ipad";
+        }    
+          
+        //inits ads
         initAds();
+        
+        //adds event listeners
+        registerAdEvents();
+    
         //prepare ad resources
         AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:false});
         
@@ -292,12 +300,13 @@ function canvasApp(){
 	
 	function setAspectRatio(){
 		
-		//if not on mobile, set the canvas ratio to 600 by 480
-		if(!userAgent.mobile){
+		//if not on mobile, set the canvas ratio to 600 by 480 or if it is an ipad
+		if(!userAgent.mobile || userAgent.device == "ipad"){
 			mainCanvas.width = 600;
 			mainCanvas.height = 480;
 			centerX = mainCanvas.width/2;
 	        centerY = mainCanvas.height/2;
+            mainCanvas.setAttribute('style', 'width: 100%; height: 100%');
 		}else{
             centerX = mainCanvas.width/2;
 	        centerY = mainCanvas.height/2;
@@ -376,10 +385,6 @@ function canvasApp(){
         meteorSmallSpriteSheet.addEventListener('load', onAssetsLoad, false);
         perkSprite.src = 'assets/sprites/perks.png';
         perkSprite.addEventListener('load', onAssetsLoad, false);
-        
-
-        //hides preload image
-        preloadImage.setAttribute('style', 'display:none;');
         
 	}
 	
@@ -2327,7 +2332,6 @@ this.context.drawImage(backgroundSprite, 0,0,this.canvasWidth,this.canvasHeight,
     
     
     //init ads
-    
     function initAds() {
         
     var defaultOptions = {
@@ -2341,12 +2345,29 @@ this.context.drawImage(backgroundSprite, 0,0,this.canvasWidth,this.canvasHeight,
         bgColor: '#000000', // color name, or '#RRGGBB'
             // x: integer,		// valid when set position to 0 / POS_XY
             // y: integer,		// valid when set position to 0 / POS_XY
-        isTesting: false, // set to true, to receiving test ad for testing purpose
+        isTesting: true, // set to true, to receiving test ad for testing purpose
          autoShow: false // auto show interstitial ad when loaded, set to false if prepare/show
         };    
         
         AdMob.setOptions( defaultOptions );
     }
+    
+    //adds ad event listenrs
+    function registerAdEvents() {
+        // new events, with variable to differentiate: adNetwork, adType, adEvent
+        document.addEventListener('onAdFailLoad', function(data){ 
+        	alert('error: ' + data.error + 
+        			', reason: ' + data.reason + 
+        			', adNetwork:' + data.adNetwork + 
+        			', adType:' + data.adType + 
+        			', adEvent:' + data.adEvent); // adType: 'banner' or 'interstitial'
+        });
+        document.addEventListener('onAdLoaded', function(data){});
+        document.addEventListener('onAdPresent', function(data){});
+        document.addEventListener('onAdLeaveApp', function(data){});
+        document.addEventListener('onAdDismiss', function(data){});
+    }
+    
     
 	//end of canvasApp function
 }
