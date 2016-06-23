@@ -63,7 +63,7 @@ function canvasApp(){
 	var frameRate = new FrameRateCounter();
 	var supportedFormat = getSoundFormat();
 	var maxVelocity = 4;
-	var itemsToLoad = 15;
+	var itemsToLoad = 17;
 	var loadCount = 0;
 	var FRAME_RATE = 1000/60;
 	var loopOn = false;
@@ -148,10 +148,13 @@ function canvasApp(){
     Mothership.prototype = new Display();
     Perk.prototype = new Display();
     
-	//sounds API
+	//sounds API variable
     var meteorExplosionSound;
     var playerShootSound;
     var explosionSound;
+    var victorySound;
+    var gameOverSound;
+    
     
     
     
@@ -277,7 +280,7 @@ function canvasApp(){
         } else {
             admobid = { // for Windows Phone
                 banner: 'ca-app-pub-6869992474017983/8878394753',
-                interstitial: 'ca-app-pub-6869992474017983/1355127956'
+                interstitial: 'ca-app-pub-2227032089453086/7143283659'
             };
         }
         
@@ -360,10 +363,19 @@ function canvasApp(){
                                     });
         perkSound = new Howl({
                     urls: ['assets/sounds/perk.mp3','assets/sounds/perk.wav'],
-                    volume: 1.5,
+                    volume: 1.0,
                     onload: onAssetsLoad
                         });
-        
+        victorySound = new Howl({
+                    urls: ['assets/sounds/victory.mp3','assets/sounds/victory.wav'],
+                    volume: 1.0,
+                    onload: onAssetsLoad
+                        });
+        gameOverSound = new Howl({
+                    urls: ['assets/sounds/gameover.mp3','assets/sounds/gameover.wav'],
+                    volume: 1.0,
+                    onload: onAssetsLoad
+                        });    
         
         
 		//sprites | images 9 images
@@ -624,7 +636,7 @@ function canvasApp(){
                         explosionSound.play();
                         currentEnemy.colliding = true;
                         currentScore += enemyShipWorth;
-                        playerShip.shield.life -= 20;
+                        playerShip.shield.life -= 50;
                         enemiesKilled++;
                     }
                 }
@@ -776,6 +788,7 @@ function canvasApp(){
         userBeatGame = false;
         gameInterface.hide('gamePlay');
         gameInterface.display('beatGame'); 
+        victorySound.play();
         
         //resets that score
         currentScore = 0;
@@ -796,6 +809,8 @@ function canvasApp(){
             soundTrack.stop();
             
         }
+        
+        gameOverSound.play();
         
         //resets the score and level
         currentLevel = 0;
