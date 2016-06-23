@@ -1018,12 +1018,12 @@ function canvasApp(){
 	
 	function onTouchStart(e){
         
-        e.preventDefault();
-		
         if(appState != STATE_PLAYING){
             return;   
         }
         
+        //prevent default behavior on gameply
+        e.preventDefault();
         //comparings the global touches active if more than one shield is activated.
 		if(e.touches.length >= 2){
 			//if more than one finger on screen. activate shield
@@ -1033,11 +1033,14 @@ function canvasApp(){
 	
 	function onTouchEndHandler(e){
         
-        e.preventDefault();
+        
         
         if(appState != STATE_PLAYING){
             return;    
         }
+        
+        //prevent default behavior on gameply
+        e.preventDefault();
         
         if(e.touches.length <= 1){
             playerShip.shoot();
