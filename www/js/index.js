@@ -13,12 +13,15 @@ function initApp(){
 //inis canvas app
 function canvasApp(){
     
+        //admob object 
+    var admobid = {};
+    
     //inits admob set up
             //determines whether it is an android or ios 
-                if( /(android)/i.test(navigator.userAgent) ) { 
+            if( /(android)/i.test(navigator.userAgent) ) { 
             admobid = { // for Android
                 banner: 'ca-app-pub-2227032089453086/6504155257',
-                interstitial: 'ca-app-pub-6869992474017983/1657046752'
+                interstitial: 'ca-app-pub-2227032089453086/5027422053'
             };
         } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
             admobid = { // for iOS
@@ -95,12 +98,7 @@ function canvasApp(){
 	var loadCount = 0;
 	var FRAME_RATE = 1000/60;
 	var loopOn = false;
-    
-    //admob object 
-    var admobid = {};
-    
-    
-	
+    	
 	//set up sprites sheets & sounds
 	var backgroundSprite = new Image(),
 	    earthSprite = new Image(),
@@ -1019,6 +1017,8 @@ function canvasApp(){
 	}
 	
 	function onTouchStart(e){
+        
+        e.preventDefault();
 		
         if(appState != STATE_PLAYING){
             return;   
@@ -1032,6 +1032,8 @@ function canvasApp(){
 	}
 	
 	function onTouchEndHandler(e){
+        
+        e.preventDefault();
         
         if(appState != STATE_PLAYING){
             return;    
