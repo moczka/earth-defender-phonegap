@@ -18,7 +18,7 @@ function canvasApp(){
                 if( /(android)/i.test(navigator.userAgent) ) { 
             admobid = { // for Android
                 banner: 'ca-app-pub-2227032089453086/6504155257',
-                interstitial: 'ca-app-pub-2227032089453086/5027422053'
+                interstitial: 'ca-app-pub-6869992474017983/1657046752'
             };
         } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
             admobid = { // for iOS
@@ -202,8 +202,8 @@ function canvasApp(){
 	var background = new Background();
     var gameInterface = new Interface();
     
-    var totalEnemies = 15,
-        totalRocks = 15,
+    var totalEnemies = 8,
+        totalRocks = 10,
         levelRocks = 5,
         levelEnemies = 8,
         levelPerks = 4,

@@ -28,7 +28,6 @@
     <preference platform="ios" name="exit-on-suspend" value="false" /> 
     <!--- plug ins -->    
     <preference name="android-build-tool" value="gradle" /> 
-        
     <gap:plugin name="cordova-plugin-admobpro" source="npm" />
     <gap:plugin name="cordova-plugin-dialogs" source="npm" />
         
