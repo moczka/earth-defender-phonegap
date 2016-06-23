@@ -16,7 +16,6 @@
     <author href="https://noxtar.com/p/about.html" email="steven.guesp@gmail.com">
         Javier Guerrero
     </author>
-        
         <content src="index.html"/>
         <access origin="*" />
         <icon src="icon.png"/>

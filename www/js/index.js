@@ -12,7 +12,35 @@ function initApp(){
 
 //inis canvas app
 function canvasApp(){
-	
+    
+    //inits admob set up
+            //determines whether it is an android or ios 
+                if( /(android)/i.test(navigator.userAgent) ) { 
+            admobid = { // for Android
+                banner: 'ca-app-pub-2227032089453086/6504155257',
+                interstitial: 'ca-app-pub-2227032089453086/5027422053'
+            };
+        } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
+            admobid = { // for iOS
+                banner: 'ca-app-pub-2227032089453086/8885872058',
+                interstitial: 'ca-app-pub-2227032089453086/5162179651'
+            };
+        } else {
+            admobid = { // for Windows Phone
+                banner: 'ca-app-pub-6869992474017983/8878394753',
+                interstitial: 'ca-app-pub-2227032089453086/7143283659'
+            };
+        }
+            
+        //inits ads
+        initAds();
+        
+        //adds event listeners
+        registerAdEvents();
+    
+        //prepare ad resources
+        AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:false});
+    
 			//sets up game engine
 		window.requestAnimFrame = (function(){
 	return  window.requestAnimationFrame   ||
@@ -266,36 +294,10 @@ function canvasApp(){
 			}
 		}
         
-        //determines whether it is an android or ios 
-                if( /(android)/i.test(navigator.userAgent) ) { 
-            admobid = { // for Android
-                banner: 'ca-app-pub-2227032089453086/6504155257',
-                interstitial: 'ca-app-pub-2227032089453086/5027422053'
-            };
-        } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
-            admobid = { // for iOS
-                banner: 'ca-app-pub-2227032089453086/8885872058',
-                interstitial: 'ca-app-pub-2227032089453086/5162179651'
-            };
-        } else {
-            admobid = { // for Windows Phone
-                banner: 'ca-app-pub-6869992474017983/8878394753',
-                interstitial: 'ca-app-pub-2227032089453086/7143283659'
-            };
-        }
-        
         if(/(ipad)/i.test(navigator.userAgent)){
             userAgent.device = "ipad";
         }    
-          
-        //inits ads
-        initAds();
-        
-        //adds event listeners
-        registerAdEvents();
-    
-        //prepare ad resources
-        AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:false});
+
         
 		appState = STATE_ASPECT_RATIO;
 		runState();
@@ -2371,7 +2373,7 @@ this.context.drawImage(backgroundSprite, 0,0,this.canvasWidth,this.canvasHeight,
     function registerAdEvents() {
         // new events, with variable to differentiate: adNetwork, adType, adEvent
         document.addEventListener('onAdFailLoad', function(data){ 
-        	AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:false});
+        	initAds();
         });
         document.addEventListener('onAdLoaded', function(data){});
         document.addEventListener('onAdPresent', function(data){});
