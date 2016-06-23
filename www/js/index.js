@@ -2371,11 +2371,7 @@ this.context.drawImage(backgroundSprite, 0,0,this.canvasWidth,this.canvasHeight,
     function registerAdEvents() {
         // new events, with variable to differentiate: adNetwork, adType, adEvent
         document.addEventListener('onAdFailLoad', function(data){ 
-        	alert('error: ' + data.error + 
-        			', reason: ' + data.reason + 
-        			', adNetwork:' + data.adNetwork + 
-        			', adType:' + data.adType + 
-        			', adEvent:' + data.adEvent); // adType: 'banner' or 'interstitial'
+        	AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:false});
         });
         document.addEventListener('onAdLoaded', function(data){});
         document.addEventListener('onAdPresent', function(data){});

@@ -26,7 +26,7 @@
     <preference name="fullscreen" value="true" />
     <preference name="SplashScreenDelay" value="4000" />
     <preference name="FadeSplashScreenDuration" value="1000"/>
-    
+    <preference platform="ios" name="exit-on-suspend" value="false" /> 
     <!--- plug ins -->    
     <preference name="android-build-tool" value="gradle" /> 
         
@@ -35,7 +35,7 @@
         
     
     <platform name="ios">
-        <preference platform="ios" name="exit-on-suspend" value="true" /> 
+        
         <icon height="57" src="res/icon/ios/icon.png" width="57" />
         <icon height="114" src="res/icon/ios/icon@2x.png" width="114" />
         <icon height="40" src="res/icon/ios/icon-40.png" width="40" />
