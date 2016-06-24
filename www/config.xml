@@ -29,7 +29,10 @@
     <!--- plug ins -->    
     <preference name="android-build-tool" value="gradle" /> 
     <gap:plugin name="cordova-plugin-admobpro" source="npm" />
-    <gap:plugin name="cordova-plugin-dialogs" source="npm" />
+    <!--
+            Push Notifications will be supported in future versions
+
+    <gap:plugin name="cordova-plugin-dialogs" source="npm" />-->
         
     
     <platform name="ios">
