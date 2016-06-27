@@ -3,7 +3,7 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "com.noxtar.defender-earth"
         versionCode = "10" 
-        version     = "0.0.1" >
+        version     = "0.0.2" >
 
     <!-- versionCode is optional and Android only -->
 
@@ -19,8 +19,9 @@
         <content src="index.html"/>
         <access origin="*" />
         <icon src="icon.png"/>
+ 
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="14" /> 
+    <preference name="android-minSdkVersion" value="19" /> 
     <preference name="orientation" value="landscape" />
     <preference name="fullscreen" value="true" />
     <preference name="SplashScreenDelay" value="4000" />
