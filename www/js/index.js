@@ -568,15 +568,19 @@ function canvasApp(){
         //console.log('The draw screen function is being called');
         
         if(enemiesKilled == levelEnemies && !playerShip.colliding){
-            if(currentLevel<lastLevel){
-                soundTrack.stop();
-            }else{
-                finalLevelSound.stop();
-            }
+			
+			//Stops the soundtrack
+				if(currentLevel == lastLevel){
+					finalLevelSound.stop();
+				}else{
+					soundTrack.stop();  
+				}
+			
             gameInterface.hide('gamePlay');
             playerShip.angle = 0;
             playerShip.velY = 0;
             playerShip.velX = 0.2;
+			
             appState = STATE_LEVEL_TRANSITION;
             return;
         }else if(shipLives < 0 && !playerShip.colliding){
@@ -679,6 +683,8 @@ function canvasApp(){
                 }
             }
         }
+		
+		
         
         for(var k=0; k<meteorPool.pool.length; k++){
             var currentRock = meteorPool.pool[k];
@@ -806,8 +812,7 @@ function canvasApp(){
         if(currentLevel == lastLevel){
             finalLevelSound.stop();
         }else{
-            soundTrack.stop();
-            
+            soundTrack.stop();  
         }
         
         gameOverSound.play();
@@ -1646,19 +1651,23 @@ this.context.drawImage(backgroundSprite, 0,0,this.canvasWidth,this.canvasHeight,
 			explosion.draw();
 			
 			if(!explosion.running){
-			     //when explosion ends set to dead
+			     //when explosion ends respawns ship to the center of the canvas
                 this.colliding = false;
                 this.alive = false;
                 self.spawn(centerX,centerY);
 			}
-
+			
+			//the ship.draw() method is called on every frame so return while the explosion is running
 			return;
 		}
 		
 		if(self.shieldActive){
-            if(shield.disabled){
-                self.shieldActive = false;   
-            }
+			
+			//whenever the shield is activate, it checks to see if the shield has been disabled for low health, if so, it 
+			//will disable the ship's shield.
+			
+			self.shieldActive = (shield.disabled)? false : true;
+			
 			shield.x = this.x-shield.centerX+this.centerX;
 			shield.y = this.y-shield.centerY+this.centerY;
 			shield.draw();
